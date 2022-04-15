@@ -2,5 +2,5 @@
 @section('title', 'Log in')
 
 @section('content')
-  <div class="card">Log in</div>
+<div class="">Log in</div>
 @endsection

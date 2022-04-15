@@ -15,6 +15,16 @@
     {{-- STYLES --}}
 
     <style>
+    :root {
+        --primary-color: rgb(44, 158, 44);
+        --primary-color-dim: rgba(172, 255, 47, 0.396);
+        --light-green: greenyellow;
+        --dark-green: rgb(2, 77, 2);
+        --color-danger: rgb(156, 63, 63);
+        --color-danger-light: rgb(188, 75, 75);
+        --color-danger-dark: rgb(110, 45, 45);
+    }
+
     *,
     *::before,
     *::after {
@@ -42,7 +52,7 @@
     }
 
     .nav {
-        background-color: rgb(44, 158, 44);
+        background-color: var(--primary-color);
         color: white;
         height: 100vh;
         min-width: 200px;
@@ -61,27 +71,28 @@
         width: 100%;
     }
 
-    .nav *> a {
+    a {
         text-decoration: none;
         color: inherit;
     }
 
     .nav *> li.active {
-        color: rgb(2, 77, 2);
+        color: var(--dark-green);
     }
 
     .nav *> li:hover {
-        color: greenyellow;
-        border-right: 2px solid greenyellow;
+        color: var(--light-green);
+        border-right: 2px solid var(--light-green);
     }
     .nav *> li:active {
-        color: rgb(2, 77, 2);
+        color: var(--dark-green);
     }
 
 
     .nav-footer {
         position: fixed;
         bottom: 0;
+        color: var(--dark-green);
     }
 
     .content {
@@ -95,38 +106,221 @@
     }
 
     .card {
-        width: 100%;
-        height: 100%;
-        box-shadow: 0px 5px 15px #bbb;
+        box-shadow: 0px 5px 15px #ccc;
         border-radius: 15px;
         padding: 1.5rem 2rem;
         background-color: inrehit;
     }
 
+    .quote {
+        padding: 0 1rem;
+        border-left: 5px solid gray;
+        border-radius: 5px;
+        font-style: italic;
+        color: gray;
+    }
+
+    .section {
+        margin: 1rem 0;
+    }
+
+    .my-1 { margin: 1rem 0; }
+    .my-2 { margin: 2rem 0; }
+    .my-3 { margin: 3rem 0; }
+    .my-4 { margin: 4rem 0; }
+    .my-5 { margin: 5rem 0; }
+    .mx-1 { margin: 0 1rem; }
+    .mx-2 { margin: 0 2rem; }
+    .mx-3 { margin: 0 3rem; }
+    .mx-4 { margin: 0 4rem; }
+    .mx-5 { margin: 0 5rem; }
+
+    .py-1 { padding: 1rem 0; }
+    .py-2 { padding: 2rem 0; }
+    .py-3 { padding: 3rem 0; }
+    .py-4 { padding: 4rem 0; }
+    .py-5 { padding: 5rem 0; }
+    .px-1 { padding: 0 1rem; }
+    .px-2 { padding: 0 2rem; }
+    .px-3 { padding: 0 3rem; }
+    .px-4 { padding: 0 4rem; }
+    .px-5 { padding: 0 5rem; }
+
+    .content *> ul {
+        padding-left: 2rem;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 7px 14px;
+        cursor: pointer;
+        max-width: fit-content;
+        max-height: fit-content;
+        font-family: 'Yanone Kaffeesatz', 'Josefin Sans', sans-serif !important;
+    }
+
+    .btn:hover {
+        background-color: var(--light-green);
+    }
+    .btn:active {
+        background-color: var(--dark-green);
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .btn-secondary {
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        background-color: transparent;
+    }
+    .btn-secondary:hover {
+        border: 2px solid var(--light-green);
+        color: var(--light-green);
+        background-color: transparent;
+    }
+    .btn-secondary:active {
+        border: 2px solid var(--dark-green);
+        color: var(--dark-green);
+        background-color: transparent;
+    }
+
+    .small {
+        font-size: 12px;
+        border: 1px solid inherit;
+    }
+    .medium {
+        font-size: 20px;
+    }
+    .large {
+        font-size: 24px;
+    }
+
+
+    .form-item {
+        margin-left: 1rem;
+        padding: 2px 8px 2px 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        height: 2rem;
+    }
+
+    .tags {
+        display: flex;
+    }
+
+    .tag {
+        border-radius: 8px;
+        background-color: #eee;
+        color: black;
+        padding: 2px 15px;
+        margin: 5px 5px;
+        /* box-shadow: 0px 3px 3px #ddd; */
+    }
+
+    .tag.active {
+        background-color: gray;
+        color: white;
+    }
+
+    .tag:hover {
+        cursor: pointer;
+        background-color: #ddd;
+        color: black;
+    }
+
+    .select-highlight {
+        box-shadow: 0px 5px 15px var(--light-green);
+        border: 2px solid var(--light-green);
+    }
+
+    .pending { color: blue; }
+    .accepted { color: green; }
+    .accepted-late { color: rgb(211, 131, 3); }
+    .rejected { color: red; }
+    .returned { color: gray; }
+
+    .divider {
+        height: 1px;
+        width: 100%;
+        margin: 1rem 0;
+        background-color: var(--primary-color-dim);
+    }
+
+    .btn-danger {
+        background-color: var(--color-danger);
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: var(--color-danger-light);
+        color: white;
+    }
+    .btn-danger:active {
+        background-color: var(--color-danger-dark);
+        color: white;
+    }
+
+    .action-buttons {
+        display: flex;
+        width: max-content;
+        gap: 1rem;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     </style>
 </head>
 <body>
-
-
-
-{{-- HTML --}}
-
 <div class="app">
     <div class="layout">
         <div class="nav">
             <ul>
+                <a href="/">
+                    <li class="{{ (request()->is('/')) ? 'active' : '' }}">Home</li>
+                </a>
                 <a href="/books">
-                    <li class="{{ (request()->is('books*')) ? 'active' : '' }}">Books</li>
+                    <li class="{{ (request()->is('books')) ? 'active' : '' }}">Books</li>
                 </a>
-                <a href="/read">
-                    <li class="{{ (request()->is('read*')) ? 'active' : '' }}">Read</li>
+                <a href="/genres">
+                    <li class="{{ (request()->is('genres')) ? 'active' : '' }}">Genres</li>
                 </a>
-                <a href="/rent">
-                    <li class="{{ (request()->is('rent*')) ? 'active' : '' }}">Rent</li>
+                <a href="/my-rentals">
+                    <li class="{{ (request()->is('my-rentals')) ? 'active' : '' }}">My rentals</li>
+                </a>
+
+                <div class="divider"></div>
+
+                <a href="/register">
+                    <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
                 </a>
                 <a href="/login">
                     <li class="{{ (request()->is('login*')) ? 'active' : '' }}">Log in</li>
                 </a>
+                <a href="/profile">
+                    <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
+                </a>
+
+                {{-- <div class="divider"></div> --}}
+
+                {{-- <a href="/manage-genres">
+                    <li class="{{ (request()->is('add-genre')) ? 'active' : '' }}">Manage genres</li>
+                </a>
+                <a href="/manage-books">
+                    <li class="{{ (request()->is('add-genre')) ? 'active' : '' }}">Manage books</li>
+                </a> --}}
             </ul>
             <div class="nav-footer">
                 BRS

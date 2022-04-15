@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\RentalController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,22 +16,58 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
 
-Route::get('/books', function () {
-    return view('books');
-});
+/*
+---------------------------------------
+Main book functionality, search, genres
+---------------------------------------
+*/
 
-Route::get('/read', function () {
-    return view('read');
-});
+// == Main page ==
+Route::get('/', [BookController::class, 'index']);
 
-Route::get('/rent', function () {
-    return view('rent');
-});
+// == Books ==
+Route::get('/books', [BookController::class, 'bookList']);
+Route::post('/books', [BookController::class, 'searchBooks']);
 
-Route::get('/login', function () {
-    return view('login');
-});
+// == Book ==
+Route::get('/book/{id}', [BookController::class, 'bookDetails']);
+
+// == Genres ==
+Route::get('/genres', [BookController::class, 'genres']);
+
+
+/*
+---------------------------------------
+Rentals
+---------------------------------------
+*/
+
+Route::get('/my-rentals', [RentalController::class, 'myRentals']);
+
+Route::get('/rental/{id}', [RentalController::class, 'rentalDetails']);
+
+Route::post('/new-rental', [RentalController::class, 'newRental']);
+
+
+/*
+---------------------------------------
+Authentication
+---------------------------------------
+*/
+
+Route::get('/register', [AuthController::class, 'register']);
+
+Route::get('/login', [AuthController::class, 'login']);
+
+Route::get('/profile', [AuthController::class, 'profile']);
+
+
+/*
+---------------------------------------
+Admin settings
+---------------------------------------
+*/
+
+Route::get('/manage-books', [BookController::class, 'manageBooks']);
+Route::get('/manage-genres', [BookController::class, 'manageGenres']);
