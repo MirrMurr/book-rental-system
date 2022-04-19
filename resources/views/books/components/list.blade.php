@@ -85,15 +85,13 @@ $view = $_GET["view"] ?? 'list';
             <div class="details">
                 <h4>{{$book['title']}}</h4>
                 <p>{{$book['authors']}}</p>
-                {{-- @foreach ($book['genreIds'] as $genreId)
-                    @foreach ($genres as $genre)
-                        @if ($genre['id'] == $genreId)
-                            <div class='tag {{$genre['style']}}'>
-                                {{$genre['name']}}
-                            </div>
-                        @endif
+                <div class="tags wrap">
+                    @foreach ($book->genres as $genre)
+                    <div class="tag {{$genre['style']}}">
+                        <?php echo $genre['name']; ?>
+                    </div>
                     @endforeach
-                @endforeach --}}
+                </div>
             </div>
         </div>
     </a>

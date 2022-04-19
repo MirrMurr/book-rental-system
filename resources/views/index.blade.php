@@ -3,10 +3,6 @@
 
 @section('content')
 <style>
-.alma {
-    color: green;
-}
-
 .system-info-card {
     display: grid;
     column-gap: 3rem;
@@ -44,28 +40,27 @@
 
     <pre>Book Renting Service</pre>
 
-    <div class="alma section">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam odio fugit incidunt adipisci voluptate, nulla dolorum esse reprehenderit architecto ex nemo delectus quos quis nam optio aspernatur deleniti deserunt distinctio.</div>
-    <div class="quote my-2">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam odio fugit incidunt adipisci voluptate, nulla dolorum esse reprehenderit architecto ex nemo delectus quos quis nam optio aspernatur deleniti deserunt distinctio."</div>
+    <div class="quote my-2">“A reader lives a thousand lives before he dies . . . The man who never reads lives only one.”</div>
 
     <div class="system-info my-3">
         <h2>Library info</h2>
         <div class="card system-info-card">
-            <div>
+            {{-- <div>
                 <h4>Number of users in the system</h4>
                 <div>placeholder</div>
-            </div>
+            </div> --}}
             <div>
                 <h4>Number of genres</h4>
-                <div>placeholder</div>
+                <div>{{ count($genres) }}</div>
             </div>
             <div>
                 <h4>Number of books</h4>
-                <div>placeholder</div>
+                <div>{{ count($books) }}</div>
             </div>
-            <div>
+            {{-- <div>
                 <h4>Number of active book rentals</h4>
                 <div>placeholder</div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -79,16 +74,5 @@
         @component('books.components.search') @endcomponent
     </div>
 
-    {{-- <div class="block">
-        <h1>TODO ❗️</h1>
-        <ul>
-            <li>[x] Number of users in the system</li>
-            <li>[x] Number of genres</li>
-            <li>[x] Number of books</li>
-            <li>[x] Number of active book rentals (in accepted status)</li>
-            <li>[x] List of genres. Each list item must be a link, referring to the List by genre page.</li>
-            <li>[x] Search for books. See Search.</li>
-        </div>
-    </div> --}}
 </div>
 @endsection

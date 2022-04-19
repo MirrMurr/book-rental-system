@@ -19,6 +19,17 @@ return new class extends Migration
             $table->enum('style', ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']);
             $table->timestamps();
         });
+
+        Schema::create('book_genre', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('genre_id');
+            $table->unsignedBigInteger('book_id');
+            $table->timestamps();
+
+            $table->unique(['book_id', 'genre_id']);
+            $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+        });
     }
 
     /**
@@ -28,6 +39,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('book_genre');
         Schema::dropIfExists('genres');
     }
 };

@@ -51,7 +51,7 @@
                     <button type="submit" class="btn btn-primary .genre-action-button">Edit</button>
                 </form>
                 <form action="{{ route('genres.destroy', $genre['id']) }}" method="POST">
-                    @method('DELETE')
+                    @method("delete")
                     @csrf
                     <button type="submit" class="btn btn-danger .genre-action-button">Delete</button>
                 </form>

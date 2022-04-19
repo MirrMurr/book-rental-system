@@ -5,59 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Models\Genre;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    protected $genres = [
-        [
-            'id' => 1,
-            'name' => 'Primary',
-            'style' => 'primary'
-        ],
-        [
-            'id' => 2,
-            'name' => 'Secondary',
-            'style' => 'secondary'
-        ],
-        [
-            'id' => 3,
-            'name' => 'Success',
-            'style' => 'success'
-        ],
-        [
-            'id' => 4,
-            'name' => 'Danger',
-            'style' => 'danger'
-        ],
-        [
-            'id' => 5,
-            'name' => 'Warning',
-            'style' => 'warning'
-        ],
-        [
-            'id' => 6,
-            'name' => 'Info',
-            'style' => 'info'
-        ],
-        [
-            'id' => 7,
-            'name' => 'Light',
-            'style' => 'light'
-        ],
-        [
-            'id' => 8,
-            'name' => 'Dark',
-            'style' => 'dark'
-        ],
-    ];
-
     public function home() {
         // TODO login: authenticate || home page
         $books = Book::all();
-        return view('index', ['books' => $books, "genres" => $this->genres]);
+        $genres = Genre::all();
+        return view('index', compact('books', 'genres'));
     }
 
     /**
@@ -68,7 +27,8 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
-        return view('books.index', ['books' => $books, "genres" => $this->genres]);
+        $genres = Genre::all();
+        return view('books.index', compact('books', 'genres'));
     }
 
     /**
@@ -78,7 +38,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create', ["genres" => $this->genres]);
+        $genres = Genre::all();
+        return view('books.create', compact('genres'));
     }
 
     /**
@@ -89,8 +50,12 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        // TODO create logic
-        return view('admin.manage-books', ["genres" => $this->genres]);
+        $val = $request->validated();
+        $genres = $val['genres'] ?? [];
+        unset($val['genres']);
+        $book = Book::create($val);
+        $book->genres()->sync($genres);
+        return redirect()->route('manage-books');
     }
 
     /**
@@ -101,16 +66,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book = [];
-        $books = Book::all();
-        foreach ($books as $b) {
-            if ($b['id'] == $id) {
-                $book = $b;
-                break;
-            }
-        }
-        $genres = $this->genres;
-        return view('books.book-details', compact('book', "genres"));
+        $genres = Genre::all();
+        return view('books.details', compact('book', "genres"));
     }
 
     /**
@@ -121,7 +78,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('books.create', compact('book'));
+        $genres = Genre::all();
+        return view('books.edit', compact('book', 'genres'));
     }
 
     /**
@@ -133,8 +91,12 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        // TODO update logic
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
+        $valid = $request->validated();
+        $genres = $val['genres'] ?? [];
+        unset($valid['genres']);
+        $book->update($valid);
+        $book->genres()->sync($genres);
+        return redirect()->route('manage-books');
     }
 
     /**
@@ -145,11 +107,11 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return redirect()->route('manage-books');
     }
 
     public function searchBooks(Request $request) {
-        // TODO query database and filter books by author & title
         $title = $request->title;
         $author = $request->author;
         $res = [];
@@ -160,12 +122,14 @@ class BookController extends Controller
             }
         }
 
-        return view('books.index', ['books' => $res, "genres" => $this->genres]);
+        $genres = Genre::all();
+        return view('books.index', ['books' => $res, "genres" => $genres]);
         // return redirect()->route('books.index')->with(['books' => $res, "genres" => $this->genres]);
     }
 
     public function manageBooks() {
         $books = Book::all();
-        return view('admin.manage-books', ['books' => $books, "genres" => $this->genres]);
+        $genres = Genre::all();
+        return view('admin.manage-books', compact('books', 'genres'));
     }
 }

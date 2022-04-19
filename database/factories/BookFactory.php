@@ -23,7 +23,8 @@ class BookFactory extends Factory
             'pages' => $this->faker->numberBetween(0, 700),
             'isbn' => $this->faker->uuid(),
             'description' => $this->faker->optional()->paragraphs(3, true),
-            'inStock' => $this->faker->randomNumber(5),
+            'inStock' => $this->faker->numberBetween(0, 15),
+            'coverImage' => $this->faker->imageUrl(480, 640, 'book cover')
         ];
     }
 }

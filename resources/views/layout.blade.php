@@ -215,7 +215,7 @@
         border: 1px solid #ccc;
         border-radius: 8px;
         outline: none;
-        height: 2rem;
+        min-height: 2rem;
     }
     .custom-form-item {
         display: flex;
@@ -228,6 +228,14 @@
 
     .custom-form-item > .form-item {
         margin-left: 0;
+    }
+
+    .input-validation-error {
+        color: var(--color-danger);
+    }
+
+    .is-invalid {
+        outline: 2px solid var(--color-danger);
     }
 
     .tags {
@@ -402,6 +410,10 @@
         gap: 1.5rem;
     }
 
+    .wrap {
+        flex-wrap: wrap;
+    }
+
     </style>
 </head>
 <body>
@@ -431,7 +443,7 @@
                     <li class="{{ (request()->is('manage-genres')) ? 'active' : '' }}">Genre settings</li>
                 </a>
 
-                <div class="divider"></div>
+                {{-- <div class="divider"></div>
 
                 <a href="/register">
                     <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
@@ -441,7 +453,7 @@
                 </a>
                 <a href="/profile">
                     <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
-                </a>
+                </a> --}}
 
             </ul>
             <div class="nav-footer">

@@ -26,14 +26,14 @@
     <div class="page-header">
         <h1>New genre</h1>
     </div>
-    <form action="{{route('genres.index')}}" method="POST">
+    <form action="{{route('genres.store')}}" method="POST">
         @csrf
 
-        @component('genres.components.form', array_merge(compact('genres'), ['isEditMode' => true])) @endcomponent
+        @component('genres.components.form', ['isEditMode' => true]) @endcomponent
 
         <div class="row action-buttons">
             <button type="submit" class="btn btn-primary large genre-create-action-btn">Save</button>
-            <a href="{{url()->previous()}}">
+            <a href="{{route('manage-genres')}}">
                 <button type="button" class="btn btn-secondary large genre-create-action-btn">Cancel</button>
             </a>
         </div>

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Create genre')
+@section('title', 'Edit genre')
 
 
 {{--
@@ -30,14 +30,16 @@
         @method('PUT')
         @csrf
 
-        @component('genres.components.form', compact('genres', 'genre', 'isEditMode')) @endcomponent
+        @component('genres.components.form', compact('genre', 'isEditMode')) @endcomponent
 
+        @if ($isEditMode)
         <div class="row action-buttons">
             <button type="submit" class="btn btn-primary large genre-create-action-btn">Save</button>
-            <a href="{{url()->previous()}}">
+            <a href="{{route('manage-genres')}}">
                 <button type="button" class="btn btn-secondary large genre-create-action-btn">Cancel</button>
             </a>
         </div>
+        @endif
     </form>
 </div>
 @endsection

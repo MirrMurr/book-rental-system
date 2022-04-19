@@ -81,13 +81,6 @@ $loggedInAsLibrarian = true;
                 <button type="submit" class="btn btn-primary borrow-btn large">Borrow this book</button>
             </form>
             @endif
-            @if ($loggedInAsLibrarian)
-            <form action="/delete-book" method="POST">
-                @csrf
-                <input type="hidden" name="bookId" value="{{$book['id']}}" />
-                <button type="submit" class="btn btn-danger delete-btn large">Delete book</button>
-            </form>
-            @endif
         </div>
     </div>
 
@@ -101,44 +94,38 @@ $loggedInAsLibrarian = true;
             <div class="book-info">
                 <div>
                     <h3>Author</h3>
-                    <div>{{ $book['author'] }}</div>
+                    <div>{{ $book['authors'] }}</div>
                 </div>
 
                 <div>
                     <h3>Genres</h3>
-                    <div class="tags">
-                        <div class="tag">
-                            <?php
-                        $r = '';
-                        foreach ($genres as $genre) {
-                            if ($genre['id'] == $book['genreId']) {
-                                $r = $genre['name'];
-                            }
-                        }
-                        echo $r;
-                        ?>
+                    <div class="tags wrap">
+                        @foreach ($book->genres as $genre)
+                        <div class="tag {{$genre['style']}}">
+                            <?php echo $genre['name']; ?>
                         </div>
+                        @endforeach
                     </div>
                 </div>
 
                 <div>
-                    <h3>Date of pubhish</h3>
-                    <div>Placeholder</div>
+                    <h3>Date of publish</h3>
+                    <div>{{ $book['releasedAt'] }}</div>
                 </div>
 
                 <div>
                     <h3>Number of pages</h3>
-                    <div>Placeholder</div>
+                    <div>{{ $book['pages'] }}</div>
                 </div>
 
                 <div>
                     <h3>Language</h3>
-                    <div>Placeholder</div>
+                    <div>{{ $book['languageCode'] }}</div>
                 </div>
 
                 <div>
                     <h3>ISBN number</h3>
-                    <div>Placeholder</div>
+                    <div>{{ $book['isbn'] }}</div>
                 </div>
 
             </div>
@@ -146,10 +133,10 @@ $loggedInAsLibrarian = true;
 
             <div class="stock-info">
                 <h3>Number of this book in the library</h3>
-                <div>Placeholder</div>
+                <div>TODO collect rental table info</div>
 
                 <h3>Number of available books</h3>
-                <div>Placeholder</div>
+                <div>{{ $book['inStock'] }}</div>
 
                 @if ($loggedInAsReader)
                 <h3>Is borrowed</h3>
