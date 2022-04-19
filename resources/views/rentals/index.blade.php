@@ -29,27 +29,27 @@
     <div class="rental-lists col--2">
         <div class="rentals-list">
             <h4 class="pending">Pending rental requests</h4>
-            @component('rental.rental-card', ['rentals' => $rentals, 'status' => 'pending'])@endcomponent
+            @component('rentals.components.rental-card', ['rentals' => $rentals, 'status' => 'pending'])@endcomponent
         </div>
 
         <div class="rentals-list">
             <h4 class="accepted">Accepted in-time rentals</h4>
-            @component('rental.rental-card', ['rentals' => $rentals, 'status' => 'accepted'])@endcomponent
+            @component('rentals.components.rental-card', ['rentals' => $rentals, 'status' => 'accepted'])@endcomponent
         </div>
 
         <div class="rentals-list">
             <h4 class="accepted-late">Accepted late rentals</h4>
-            @component('rental.rental-card', ['rentals' => $rentals, 'status' => 'acceptedLate'])@endcomponent
+            @component('rentals.components.rental-card', ['rentals' => $rentals, 'status' => 'acceptedLate'])@endcomponent
         </div>
 
         <div class="rentals-list">
             <h4 class="rejected">Rejected rentals</h4>
-            @component('rental.rental-card', ['rentals' => $rentals, 'status' => 'rejected'])@endcomponent
+            @component('rentals.components.rental-card', ['rentals' => $rentals, 'status' => 'rejected'])@endcomponent
         </div>
 
         <div class="rentals-list">
             <h4 class="returned">Returned rentals</h4>
-            @component('rental.rental-card', ['rentals' => $rentals, 'status' => 'returned'])@endcomponent
+            @component('rentals.components.rental-card', ['rentals' => $rentals, 'status' => 'returned'])@endcomponent
         </div>
     </div>
 </div>

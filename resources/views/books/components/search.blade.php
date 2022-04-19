@@ -7,7 +7,7 @@
 $title = $_POST['title'] ?? '';
 $author = $_POST['author'] ?? '';
 ?>
-<form action="/books" method="POST">
+<form action="{{route('books.search')}}" method="POST">
     @csrf
     <div class="book-filter">
         <label for="title">Title:</label>

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBookRequest;
-use App\Http\Requests\UpdateBookRequest;
-use App\Models\Book;
+use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
+use App\Models\Genre;
 
 use Illuminate\Http\Request;
 
-class BookController extends Controller
+class GenreController extends Controller
 {
-
     protected $books = [
         [
             'id' => 1,
@@ -85,11 +84,6 @@ class BookController extends Controller
         ],
     ];
 
-    public function home() {
-        // TODO login: authenticate || home page
-        return view('index', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -97,7 +91,16 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books.index', ['books' => $this->books, "genres" => $this->genres]);
+        // TODO query database and filter books by genre
+        $filteredGenre = $_GET['v'] ?? '';
+        $res = [];
+        foreach ($this->books as $b) {
+            if ($filteredGenre == '' || $b['genreId'] == $filteredGenre) {
+                array_push($res, $b);
+            }
+        }
+        return view('genres.index', ['books' => $res, "genres" => $this->genres, 'edit' => false]);
+
     }
 
     /**
@@ -107,47 +110,38 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create', ['books' => $this->books, "genres" => $this->genres]);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreBookRequest  $request
+     * @param  \App\Http\Requests\StoreGenreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBookRequest $request)
+    public function store(StoreGenreRequest $request)
     {
-        // TODO create logic
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Book  $book
+     * @param  \App\Models\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show(Genre $genre)
     {
-        $book = [];
-        foreach ($this->books as $b) {
-            if ($b['id'] == $id) {
-                $book = $b;
-                break;
-            }
-        }
-        $genres = $this->genres;
-        return view('books.book-details', compact('book', "genres"));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Book  $book
+     * @param  \App\Models\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function edit(Book $book)
+    public function edit(Genre $genre)
     {
         //
     }
@@ -155,59 +149,23 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateBookRequest  $request
-     * @param  \App\Models\Book  $book
+     * @param  \App\Http\Requests\UpdateGenreRequest  $request
+     * @param  \App\Models\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBookRequest $request, Book $book)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
-        // TODO update logic
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Book  $book
+     * @param  \App\Models\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy(Genre $genre)
     {
         //
-    }
-
-    public function searchBooks(Request $request) {
-        // TODO query database and filter books by author & title
-        $title = $request->title;
-        $author = $request->author;
-        $res = [];
-        foreach ($this->books as $b) {
-            if (($title == null || $b['title'] == $title) && ($author == null || $b['author'] == $author)) {
-                array_push($res, $b);
-            }
-        }
-
-        return view('books.index', ['books' => $res, "genres" => $this->genres]);
-        // return redirect()->route('books.index')->with(['books' => $res, "genres" => $this->genres]);
-    }
-
-    public function genres() {
-        // TODO query database and filter books by genre
-        $filteredGenre = $_GET['v'] ?? '';
-        $res = [];
-        foreach ($this->books as $b) {
-            if ($filteredGenre == '' || $b['genreId'] == $filteredGenre) {
-                array_push($res, $b);
-            }
-        }
-        return view('books.genres', ['books' => $res, "genres" => $this->genres, 'edit' => false]);
-    }
-
-    public function manageBooks() {
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
-    public function manageGenres() {
-        return view('admin.manage-genres', ['books' => $this->books, "genres" => $this->genres]);
     }
 }

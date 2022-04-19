@@ -74,7 +74,7 @@ $view = $_GET["view"] ?? 'list';
 
 <div id="book-list" class="book-list {{ $view == "list" ? 'col--list' : 'col--grid'}}">
     @foreach ($books as $book)
-    <a href="/book/{{$book['id']}}">
+    <a href="/book/{{$book['id']}}{{$edit ? '/edit' : ''}}">
         <div class="card my-1 book-entry">
             <div class="book-cover-container">
                 <img class="book-cover" src="{{$book['coverImage']}}" alt="">

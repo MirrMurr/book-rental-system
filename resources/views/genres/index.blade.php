@@ -14,9 +14,9 @@ $genreUrl = $_GET['v'] ?? ''
             <button type="submit" class="btn btn-secondary settings-btn large">Manage</button>
         </form>
     </div>
-    @component('books.genre-selector', compact('genres'))
+    @component('genres.components.selector', compact('genres'))
     <a class="tag {{ $genreUrl == '' ? 'active' : '' }}" href="/genres">All</a>
     @endcomponent
-    @component('books.book-list', compact('books', 'genres')) @endcomponent
+    @component('books.components.list', compact('books', 'genres', 'edit')) @endcomponent
 </div>
 @endsection

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreRentalRequest;
+use App\Http\Requests\UpdateRentalRequest;
+use App\Models\Rental;
 
 class RentalController extends Controller
 {
@@ -65,26 +67,90 @@ class RentalController extends Controller
         ],
     ];
 
-    public function myRentals() {
-        return view('rental.my-rentals', ["rentals" => $this->rentals]);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('rentals.index', ["rentals" => $this->rentals]);
     }
 
-    public function rentalDetails($id) {
-        $rental = [];
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        // $bookId = $_POST['bookId'] ?? null;
+        // $bookId = $request->bookId ?? null;
+
+        // 'redirect' will re-query the database for the updated book rental status
+        return back();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreRentalRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreRentalRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Rental $rental)
+    {
+        $storedRental = [];
         foreach ($this->rentals as $r) {
             if ($r['id'] == $id) {
                 $rental = $r;
                 break;
             }
         }
-        return view('rental.rental-details', compact('rental'));
+        return view('rental.rental-details', compact('storedRental'));
     }
 
-    public function newRental(Request $request) {
-        // $bookId = $_POST['bookId'] ?? null;
-        $bookId = $request->bookId ?? null;
-        // TODO issue rental in database
-        // 'redirect' will re-query the database for the updated book rental status
-        return back();
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Rental $rental)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateRentalRequest  $request
+     * @param  \App\Models\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRentalRequest $request, Rental $rental)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Rental  $rental
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Rental $rental)
+    {
+        //
     }
 }

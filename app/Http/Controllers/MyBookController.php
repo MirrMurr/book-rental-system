@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBookRequest;
-use App\Http\Requests\UpdateBookRequest;
-use App\Models\Book;
-
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-
     protected $books = [
         [
             'id' => 1,
@@ -85,99 +80,17 @@ class BookController extends Controller
         ],
     ];
 
-    public function home() {
-        // TODO login: authenticate || home page
-        return view('index', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function index() {
         return view('books.index', ['books' => $this->books, "genres" => $this->genres]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('books.create', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreBookRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreBookRequest $request)
-    {
-        // TODO create logic
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Book $book)
-    {
-        $book = [];
-        foreach ($this->books as $b) {
-            if ($b['id'] == $id) {
-                $book = $b;
-                break;
-            }
-        }
-        $genres = $this->genres;
-        return view('books.book-details', compact('book', "genres"));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateBookRequest  $request
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateBookRequest $request, Book $book)
-    {
-        // TODO update logic
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Book $book)
-    {
-        //
+    public function bookList(Request $request) {
+        return view('books.books', ['books' => $this->books, "genres" => $this->genres]);
     }
 
     public function searchBooks(Request $request) {
         // TODO query database and filter books by author & title
+
         $title = $request->title;
         $author = $request->author;
         $res = [];
@@ -187,8 +100,28 @@ class BookController extends Controller
             }
         }
 
-        return view('books.index', ['books' => $res, "genres" => $this->genres]);
-        // return redirect()->route('books.index')->with(['books' => $res, "genres" => $this->genres]);
+        return view('books.books', ['books' => $res, "genres" => $this->genres]);
+    }
+
+    public function newBook() {
+        return view('books.book-create', ['books' => $this->books, "genres" => $this->genres]);
+    }
+
+    public function storeBook() {
+        // return view('books.book-create', ['books' => $this->books, "genres" => $this->genres]);
+        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
+    }
+
+    public function bookDetails($id) {
+        $book = [];
+        foreach ($this->books as $b) {
+            if ($b['id'] == $id) {
+                $book = $b;
+                break;
+            }
+        }
+        $genres = $this->genres;
+        return view('books.book-details', compact('book', "genres"));
     }
 
     public function genres() {

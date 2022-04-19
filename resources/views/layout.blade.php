@@ -54,6 +54,7 @@
     .nav {
         background-color: var(--primary-color);
         color: white;
+        /* color: var(--dark-green); */
         height: 100vh;
         min-width: 200px;
         display: flex;
@@ -78,6 +79,7 @@
 
     .nav *> li.active {
         color: var(--dark-green);
+        /* color: white; */
     }
 
     .nav *> li:hover {
@@ -166,28 +168,31 @@
 
     .btn:hover {
         background-color: var(--light-green);
+        outline: 2px solid var(--light-green);
     }
     .btn:active {
         background-color: var(--dark-green);
+        outline: 2px solid var(--dark-green);
     }
 
     .btn-primary {
+        outline: 2px solid var(--primary-color);
         background-color: var(--primary-color);
         color: white;
     }
 
     .btn-secondary {
-        border: 2px solid var(--primary-color);
+        outline: 2px solid var(--primary-color);
         color: var(--primary-color);
         background-color: transparent;
     }
     .btn-secondary:hover {
-        border: 2px solid var(--light-green);
+        outline: 2px solid var(--light-green);
         color: var(--light-green);
         background-color: transparent;
     }
     .btn-secondary:active {
-        border: 2px solid var(--dark-green);
+        outline: 2px solid var(--dark-green);
         color: var(--dark-green);
         background-color: transparent;
     }
@@ -211,6 +216,18 @@
         border-radius: 8px;
         outline: none;
         height: 2rem;
+    }
+    .custom-form-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-width: 10rem;
+        max-width: 20rem;
+        margin-bottom: 1rem;
+    }
+
+    .custom-form-item > .form-item {
+        margin-left: 0;
     }
 
     .tags {
@@ -281,6 +298,11 @@
         align-items: center;
     }
 
+    .row {
+        display: flex;
+        gap: 1.5rem;
+    }
+
     </style>
 </head>
 <body>
@@ -288,38 +310,38 @@
     <div class="layout">
         <div class="nav">
             <ul>
-                <a href="/">
-                    <li class="{{ (request()->is('/')) ? 'active' : '' }}">Home</li>
+                <a href="{{route('home')}}">
+                    <li class="{{ (request()->is('home')) ? 'active' : '' }}">Home</li>
                 </a>
-                <a href="/books">
-                    <li class="{{ (request()->is('books')) ? 'active' : '' }}">Books</li>
+                <a href="{{route('books.index')}}">
+                    <li class="{{ (request()->is('books') || request()->is('search-books')) ? 'active' : '' }}">Books</li>
                 </a>
-                <a href="/genres">
+                <a href="{{route('genres.index')}}">
                     <li class="{{ (request()->is('genres')) ? 'active' : '' }}">Genres</li>
                 </a>
-                <a href="/my-rentals">
-                    <li class="{{ (request()->is('my-rentals')) ? 'active' : '' }}">My rentals</li>
+                <a href="{{route('rentals.index')}}">
+                    <li class="{{ (request()->is('rentals')) ? 'active' : '' }}">My rentals</li>
                 </a>
 
                 <div class="divider"></div>
 
-                <a href="/register">
+                {{-- <a href="{{ route('') }}">
                     <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
                 </a>
-                <a href="/login">
+                <a href="{{ route('') }}">
                     <li class="{{ (request()->is('login*')) ? 'active' : '' }}">Log in</li>
                 </a>
-                <a href="/profile">
+                <a href="{{ route('') }}">
                     <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
                 </a>
 
-                {{-- <div class="divider"></div> --}}
+                <div class="divider"></div> --}}
 
-                {{-- <a href="/manage-genres">
-                    <li class="{{ (request()->is('add-genre')) ? 'active' : '' }}">Manage genres</li>
+                {{-- <a href="{{ route('') }}">
+                    <li class="{{ (request()->is('manage-books')) ? 'active' : '' }}">Book settings</li>
                 </a>
-                <a href="/manage-books">
-                    <li class="{{ (request()->is('add-genre')) ? 'active' : '' }}">Manage books</li>
+                <a href="{{ route('') }}">
+                    <li class="{{ (request()->is('manage-genres')) ? 'active' : '' }}">Genre settings</li>
                 </a> --}}
             </ul>
             <div class="nav-footer">
