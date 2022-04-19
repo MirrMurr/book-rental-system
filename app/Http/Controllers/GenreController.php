@@ -15,7 +15,7 @@ class GenreController extends Controller
             'id' => 1,
             'title' => 'LOTR',
             'author' => 'JRR. Tolkien',
-            'genreId' => 2,
+            'genreIds' => [2],
             'dateOfPublish' => 1,
             'numberOfPages' => 1,
             'language' => 1,
@@ -29,7 +29,7 @@ class GenreController extends Controller
             'id' => 2,
             'title' => 'ALMA',
             'author' => 'Masik author',
-            'genreId' => 2,
+            'genreIds' => [2, 4],
             'dateOfPublish' => 1,
             'numberOfPages' => 1,
             'language' => 1,
@@ -43,7 +43,7 @@ class GenreController extends Controller
             'id' => 3,
             'title' => 'Lord Of The Rings',
             'author' => 'JRR. Tolkien',
-            'genreId' => 3,
+            'genreIds' => [3, 4],
             'dateOfPublish' => 1,
             'numberOfPages' => 1,
             'language' => 1,
@@ -57,7 +57,7 @@ class GenreController extends Controller
             'id' => 4,
             'title' => 'Negyedik',
             'author' => 'SZILVA',
-            'genreId' => 1,
+            'genreIds' => [1, 4],
             'dateOfPublish' => 1,
             'numberOfPages' => 1,
             'language' => 1,
@@ -72,15 +72,43 @@ class GenreController extends Controller
     protected $genres = [
         [
             'id' => 1,
-            'name' => 'Scifi'
+            'name' => 'Primary',
+            'style' => 'primary'
         ],
         [
             'id' => 2,
-            'name' => 'Adventure'
+            'name' => 'Secondary',
+            'style' => 'secondary'
         ],
         [
             'id' => 3,
-            'name' => 'Self-improvement'
+            'name' => 'Success',
+            'style' => 'success'
+        ],
+        [
+            'id' => 4,
+            'name' => 'Danger',
+            'style' => 'danger'
+        ],
+        [
+            'id' => 5,
+            'name' => 'Warning',
+            'style' => 'warning'
+        ],
+        [
+            'id' => 6,
+            'name' => 'Info',
+            'style' => 'info'
+        ],
+        [
+            'id' => 7,
+            'name' => 'Light',
+            'style' => 'light'
+        ],
+        [
+            'id' => 8,
+            'name' => 'Dark',
+            'style' => 'dark'
         ],
     ];
 
@@ -95,8 +123,14 @@ class GenreController extends Controller
         $filteredGenre = $_GET['v'] ?? '';
         $res = [];
         foreach ($this->books as $b) {
-            if ($filteredGenre == '' || $b['genreId'] == $filteredGenre) {
+            if ($filteredGenre == '') {
                 array_push($res, $b);
+            } else {
+                foreach ($b['genreIds'] as $genreId) {
+                    if ($filteredGenre == $genreId) {
+                        array_push($res, $b);
+                    }
+                }
             }
         }
         return view('genres.index', ['books' => $res, "genres" => $this->genres, 'edit' => false]);
@@ -110,7 +144,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('genres.create', ['books' => $this->books, "genres" => $this->genres]);
     }
 
     /**
@@ -121,7 +155,7 @@ class GenreController extends Controller
      */
     public function store(StoreGenreRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -132,7 +166,7 @@ class GenreController extends Controller
      */
     public function show(Genre $genre)
     {
-        //
+        return view('genres.details', ['genre' => $genre, 'isEditMode' => false]);
     }
 
     /**
@@ -143,7 +177,7 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('genres.details', ['genres' => $genres, 'genre' => $genre, 'isEditMode' => true]);
     }
 
     /**
@@ -167,5 +201,9 @@ class GenreController extends Controller
     public function destroy(Genre $genre)
     {
         //
+    }
+
+    public function manageGenres() {
+        return view('admin.manage-genres', ['books' => $this->books, "genres" => $this->genres]);
     }
 }

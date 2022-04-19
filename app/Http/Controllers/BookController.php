@@ -6,88 +6,58 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-
-    protected $books = [
-        [
-            'id' => 1,
-            'title' => 'LOTR',
-            'author' => 'JRR. Tolkien',
-            'genreId' => 2,
-            'dateOfPublish' => 1,
-            'numberOfPages' => 1,
-            'language' => 1,
-            'isbn' => 1,
-            'inStock' => 1,
-            'available' => 1,
-            'description' => 1,
-            'coverImage' => "https://cdn8.openculture.com/wp-content/uploads/2013/02/The-Fellowship-Of-The-Ring-Book-Cover-by-JRR-Tolkien_1-480.jpg",
-        ],
-        [
-            'id' => 2,
-            'title' => 'ALMA',
-            'author' => 'Masik author',
-            'genreId' => 2,
-            'dateOfPublish' => 1,
-            'numberOfPages' => 1,
-            'language' => 1,
-            'isbn' => 1,
-            'inStock' => 1,
-            'available' => 1,
-            'description' => 1,
-            'coverImage' => "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=936&q=80",
-        ],
-        [
-            'id' => 3,
-            'title' => 'Lord Of The Rings',
-            'author' => 'JRR. Tolkien',
-            'genreId' => 3,
-            'dateOfPublish' => 1,
-            'numberOfPages' => 1,
-            'language' => 1,
-            'isbn' => 1,
-            'inStock' => 1,
-            'available' => 1,
-            'description' => 1,
-            'coverImage' => "https://cdn8.openculture.com/wp-content/uploads/2013/02/The-Fellowship-Of-The-Ring-Book-Cover-by-JRR-Tolkien_1-480.jpg",
-        ],
-        [
-            'id' => 4,
-            'title' => 'Negyedik',
-            'author' => 'SZILVA',
-            'genreId' => 1,
-            'dateOfPublish' => 1,
-            'numberOfPages' => 1,
-            'language' => 1,
-            'isbn' => 1,
-            'inStock' => 1,
-            'available' => 1,
-            'description' => 1,
-            'coverImage' => null,
-        ],
-    ];
-
     protected $genres = [
         [
             'id' => 1,
-            'name' => 'Scifi'
+            'name' => 'Primary',
+            'style' => 'primary'
         ],
         [
             'id' => 2,
-            'name' => 'Adventure'
+            'name' => 'Secondary',
+            'style' => 'secondary'
         ],
         [
             'id' => 3,
-            'name' => 'Self-improvement'
+            'name' => 'Success',
+            'style' => 'success'
+        ],
+        [
+            'id' => 4,
+            'name' => 'Danger',
+            'style' => 'danger'
+        ],
+        [
+            'id' => 5,
+            'name' => 'Warning',
+            'style' => 'warning'
+        ],
+        [
+            'id' => 6,
+            'name' => 'Info',
+            'style' => 'info'
+        ],
+        [
+            'id' => 7,
+            'name' => 'Light',
+            'style' => 'light'
+        ],
+        [
+            'id' => 8,
+            'name' => 'Dark',
+            'style' => 'dark'
         ],
     ];
 
     public function home() {
         // TODO login: authenticate || home page
-        return view('index', ['books' => $this->books, "genres" => $this->genres]);
+        $books = Book::all();
+        return view('index', ['books' => $books, "genres" => $this->genres]);
     }
 
     /**
@@ -97,7 +67,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books.index', ['books' => $this->books, "genres" => $this->genres]);
+        $books = Book::all();
+        return view('books.index', ['books' => $books, "genres" => $this->genres]);
     }
 
     /**
@@ -107,7 +78,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create', ['books' => $this->books, "genres" => $this->genres]);
+        return view('books.create', ["genres" => $this->genres]);
     }
 
     /**
@@ -119,7 +90,7 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         // TODO create logic
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
+        return view('admin.manage-books', ["genres" => $this->genres]);
     }
 
     /**
@@ -131,7 +102,8 @@ class BookController extends Controller
     public function show(Book $book)
     {
         $book = [];
-        foreach ($this->books as $b) {
+        $books = Book::all();
+        foreach ($books as $b) {
             if ($b['id'] == $id) {
                 $book = $b;
                 break;
@@ -149,7 +121,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('books.create', compact('book'));
     }
 
     /**
@@ -181,8 +153,9 @@ class BookController extends Controller
         $title = $request->title;
         $author = $request->author;
         $res = [];
-        foreach ($this->books as $b) {
-            if (($title == null || $b['title'] == $title) && ($author == null || $b['author'] == $author)) {
+        $books = Book::all();
+        foreach ($books as $b) {
+            if (($title == null || Str::contains($b['title'], $title)) && ($author == null || Str::contains($b['authors'], $author))) {
                 array_push($res, $b);
             }
         }
@@ -191,23 +164,8 @@ class BookController extends Controller
         // return redirect()->route('books.index')->with(['books' => $res, "genres" => $this->genres]);
     }
 
-    public function genres() {
-        // TODO query database and filter books by genre
-        $filteredGenre = $_GET['v'] ?? '';
-        $res = [];
-        foreach ($this->books as $b) {
-            if ($filteredGenre == '' || $b['genreId'] == $filteredGenre) {
-                array_push($res, $b);
-            }
-        }
-        return view('books.genres', ['books' => $res, "genres" => $this->genres, 'edit' => false]);
-    }
-
     public function manageBooks() {
-        return view('admin.manage-books', ['books' => $this->books, "genres" => $this->genres]);
-    }
-
-    public function manageGenres() {
-        return view('admin.manage-genres', ['books' => $this->books, "genres" => $this->genres]);
+        $books = Book::all();
+        return view('admin.manage-books', ['books' => $books, "genres" => $this->genres]);
     }
 }

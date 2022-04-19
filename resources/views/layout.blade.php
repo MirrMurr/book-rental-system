@@ -222,7 +222,7 @@
         flex-direction: column;
         justify-content: space-between;
         min-width: 10rem;
-        max-width: 20rem;
+        /* max-width: 50%; */
         margin-bottom: 1rem;
     }
 
@@ -254,9 +254,108 @@
         color: black;
     }
 
+    .tag.primary {
+        background-color: rgb(22, 114, 160);
+        color: white;
+    }
+    .tag.primary.active {
+        background-color: rgb(8, 56, 186);
+        color: white;
+    }
+    .tag.primary:hover {
+        background-color: rgb(6, 12, 96);
+        color: white;
+    }
+    .tag.secondary {
+        background-color: rgb(196, 193, 16);
+        color: white;
+    }
+    .tag.secondary.active {
+        background-color: rgb(139, 133, 11);
+        color: white;
+    }
+    .tag.secondary:hover {
+        background-color: rgb(82, 86, 4);
+        color: white;
+    }
+    .tag.success {
+        background-color: rgb(42, 167, 7);
+        color: white;
+    }
+    .tag.success.active {
+        background-color: rgb(27, 121, 5);
+        color: white;
+    }
+    .tag.success:hover {
+        background-color: rgb(8, 59, 2);
+        color: white;
+    }
+    .tag.danger {
+        background-color: rgb(170, 11, 11);
+        color: white;
+    }
+    .tag.danger.active {
+        background-color: rgb(103, 3, 3);
+        color: white;
+    }
+    .tag.danger:hover {
+        background-color: rgb(78, 1, 1);
+        color: white;
+    }
+    .tag.warning {
+        background-color: rgb(184, 135, 12);
+        color: white;
+    }
+    .tag.warning.active {
+        background-color: rgb(147, 95, 5);
+        color: white;
+    }
+    .tag.warning:hover {
+        background-color: rgb(109, 52, 3);
+        color: white;
+    }
+    .tag.info {
+        background-color: rgb(50, 160, 190);
+        color: white;
+    }
+    .tag.info.active {
+        background-color: rgb(36, 124, 139);
+        color: white;
+    }
+    .tag.info:hover {
+        background-color: rgb(30, 100, 99);
+        color: white;
+    }
+    .tag.light {
+        background-color: rgb(161, 159, 159);
+        color: white;
+    }
+    .tag.light.active {
+        background-color: rgb(125, 124, 124);
+        color: white;
+    }
+    .tag.light:hover {
+        background-color: rgb(85, 84, 84);
+        color: white;
+    }
+    .tag.dark {
+        background-color: rgb(84, 82, 82);
+        color: white;
+    }
+    .tag.dark.active {
+        background-color: rgb(62, 61, 61);
+        color: white;
+    }
+    .tag.dark:hover {
+        background-color: rgb(27, 27, 27);
+        color: white;
+    }
+
     .select-highlight {
-        box-shadow: 0px 5px 15px var(--light-green);
-        border: 2px solid var(--light-green);
+        /* box-shadow: 0px 5px 15px var(--light-green); */
+        box-shadow: 0px 5px 15px gray;
+        outline: 3px solid var(--light-green);
+        /* outline: 2px solid gray; */
     }
 
     .pending { color: blue; }
@@ -325,24 +424,25 @@
 
                 <div class="divider"></div>
 
-                {{-- <a href="{{ route('') }}">
+                <a href="{{ route('manage-books') }}">
+                    <li class="{{ (request()->is('manage-books')) ? 'active' : '' }}">Book settings</li>
+                </a>
+                <a href="{{ route('manage-genres') }}">
+                    <li class="{{ (request()->is('manage-genres')) ? 'active' : '' }}">Genre settings</li>
+                </a>
+
+                <div class="divider"></div>
+
+                <a href="/register">
                     <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
                 </a>
-                <a href="{{ route('') }}">
+                <a href="/login">
                     <li class="{{ (request()->is('login*')) ? 'active' : '' }}">Log in</li>
                 </a>
-                <a href="{{ route('') }}">
+                <a href="/profile">
                     <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
                 </a>
 
-                <div class="divider"></div> --}}
-
-                {{-- <a href="{{ route('') }}">
-                    <li class="{{ (request()->is('manage-books')) ? 'active' : '' }}">Book settings</li>
-                </a>
-                <a href="{{ route('') }}">
-                    <li class="{{ (request()->is('manage-genres')) ? 'active' : '' }}">Genre settings</li>
-                </a> --}}
             </ul>
             <div class="nav-footer">
                 BRS

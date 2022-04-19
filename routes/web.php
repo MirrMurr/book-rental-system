@@ -25,7 +25,6 @@ Main book functionality, search, genres
 ---------------------------------------
 */
 
-// Route::get('/', [BookController::class, 'index']);
 Route::get('/', function() {
     return redirect('/home');
 });
@@ -82,5 +81,5 @@ Admin settings
 ---------------------------------------
 */
 
-Route::get('/manage-books', [BookController::class, 'manageBooks']);
-Route::get('/manage-genres', [BookController::class, 'manageGenres']);
+Route::get('/manage-books', [BookController::class, 'manageBooks'])->name('manage-books');
+Route::get('/manage-genres', [GenreController::class, 'manageGenres'])->name('manage-genres');

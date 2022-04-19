@@ -1,7 +1,7 @@
 <style>
 .book-entry {
     display: flex;
-    height: 15rem;
+    /* min-height: ; */
 }
 .book-entry:hover {
     box-shadow: 0px 5px 20px #aaa;
@@ -26,8 +26,8 @@
 }
 
 .book-cover-container {
-    height: 100%;
-    max-width: 30%;
+    height: 15rem;
+    /* max-width: 30%; */
     margin-right: 2rem;
 }
 .book-cover {
@@ -74,25 +74,26 @@ $view = $_GET["view"] ?? 'list';
 
 <div id="book-list" class="book-list {{ $view == "list" ? 'col--list' : 'col--grid'}}">
     @foreach ($books as $book)
-    <a href="/book/{{$book['id']}}{{$edit ? '/edit' : ''}}">
+    <?php
+    $edit1 = $edit ?? false
+    ?>
+    <a href="/books/{{$book['id']}}{{$edit1 ? '/edit' : ''}}">
         <div class="card my-1 book-entry">
             <div class="book-cover-container">
                 <img class="book-cover" src="{{$book['coverImage']}}" alt="">
             </div>
             <div class="details">
                 <h4>{{$book['title']}}</h4>
-                <p>{{$book['author']}}</p>
-                <div class='tag'>
-                <?php
-                $r = '';
-                foreach ($genres as $genre) {
-                    if ($genre['id'] == $book['genreId']) {
-                        $r = $genre['name'];
-                    }
-                }
-                echo $r;
-                ?>
-                </div>
+                <p>{{$book['authors']}}</p>
+                {{-- @foreach ($book['genreIds'] as $genreId)
+                    @foreach ($genres as $genre)
+                        @if ($genre['id'] == $genreId)
+                            <div class='tag {{$genre['style']}}'>
+                                {{$genre['name']}}
+                            </div>
+                        @endif
+                    @endforeach
+                @endforeach --}}
             </div>
         </div>
     </a>

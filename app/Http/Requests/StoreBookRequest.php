@@ -13,7 +13,8 @@ class StoreBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        // TODO
+        return true;
     }
 
     /**
@@ -23,6 +24,7 @@ class StoreBookRequest extends FormRequest
      */
     public function rules()
     {
+        // TODO
         return [
             //
         ];
