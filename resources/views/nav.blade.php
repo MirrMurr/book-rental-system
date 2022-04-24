@@ -1,5 +1,6 @@
 <div class="nav">
     <ul>
+        @auth
         <a href="{{route('home')}}">
             <li class="{{ (request()->is('home')) ? 'active' : '' }}">Home</li>
         </a>
@@ -29,11 +30,26 @@
             <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
         </a>
 
-        <div class="divider"></div>
+        <a class="dropdown-item" href="{{ route('logout') }}"
+           onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();">
+            <li>{{ __('Log out') }}</li>
+        </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+
+        @else
+
+        <a href="/register">
+            <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
+        </a>
 
         <a href="/login">
             <li class="{{ (request()->is('login*')) ? 'active' : '' }}">Log in</li>
         </a>
+        @endauth
     </ul>
 
     <div class="nav-footer">

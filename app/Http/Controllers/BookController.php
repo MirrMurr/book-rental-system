@@ -12,10 +12,14 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function home() {
-        $books = Book::all();
-        $genres = Genre::all();
-        return view('index', compact('books', 'genres'));
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
     /**

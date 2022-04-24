@@ -6,15 +6,13 @@
 
 </style>
 
-<div class="profile-page card">
 <h1>Profile</h1>
-<div>
+<div class="profile-page card">
     <h4>Name</h4>
-    <div>placeholder</div>
+    <div>{{ Auth::user()->name }}</div>
     <h4>Email address</h4>
-    <div>placeholder</div>
-    <h4>Role (Reader|Librarian)</h4>
-    <div>placeholder</div>
-</div>
+    <div>{{ Auth::user()->email }}</div>
+    <h4>Role</h4>
+    <div>{{ Auth::user()->role }}</div>
 </div>
 @endsection

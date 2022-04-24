@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('emailVerifiedAt')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('role', ['librarian', 'reader']);
+            $table->enum('role', ['librarian', 'reader'])->default('reader');
             $table->timestamps();
         });
     }

@@ -36,7 +36,19 @@
 
 </style>
 <div>
-    <h1>WELCOME!</h1>
+    @auth
+    <h1>Welcome, {{ Auth::user()->name }}!</h1>
+    @endauth
+
+    @guest
+    <h1>Welcome!</h1>
+    @endguest
+
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <pre>Book Renting Service</pre>
 
@@ -47,7 +59,7 @@
         <div class="card system-info-card">
             <div>
                 <h4>Number of users in the system</h4>
-                <div>placeholder</div>
+                <div>{{ count($users) }}</div>
             </div>
             <div>
                 <h4>Number of genres</h4>

@@ -9,6 +9,16 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -82,5 +92,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function profile() {
+        // $user = Auth::user();
+        return view('auth.profile');
     }
 }
