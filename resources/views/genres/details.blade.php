@@ -1,5 +1,9 @@
+<?php
+$pageTitle = $isEditMode ? 'Edit genre' : 'Genre details'
+?>
+
 @extends('layout')
-@section('title', 'Edit genre')
+@section('title', $pageTitle)
 
 
 {{--
@@ -11,6 +15,10 @@
 
 
 <style>
+
+.genre-form {
+    max-width: 30%;
+}
 .genre-create-action-btn {
     width: max-content;
     height: max-content;
@@ -22,15 +30,17 @@
 </style>
 
 @section('content')
-<div class="new-genre-page card">
+<div class="genre-details-page">
     <div class="page-header">
-        <h1>New genre</h1>
+        <h1>{{$pageTitle}}</h1>
     </div>
     <form action="{{route('genres.update', $genre['id'])}}" method="POST">
         @method('PUT')
         @csrf
 
-        @component('genres.components.form', compact('genre', 'isEditMode')) @endcomponent
+        <div class="card genre-form">
+            @component('genres.components.form', compact('genre', 'isEditMode')) @endcomponent
+        </div>
 
         @if ($isEditMode)
         <div class="row action-buttons">

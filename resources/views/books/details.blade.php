@@ -6,8 +6,6 @@
 <style>
 .columns {
   display: flex;
-  /* column-gap: 1rem;
-  grid-template-columns: 1fr 1fr; */
 }
 .book-cover-container {
     height: 100%;
@@ -48,17 +46,31 @@
 }
 
 .stock-info {
-    margin-bottom: 3rem;
+    display: grid;
+    column-gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+@media only screen and (max-width: 1400px) {
+    .columns {
+        display: block;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
 }
 
 @media only screen and (max-width: 900px) {
     .title {
         display: block;
     }
-    .columns {
-        display: block;
-    }
     .book-info {
+        grid-template-columns: 1fr;
+    }
+
+    .stock-info {
         grid-template-columns: 1fr;
     }
 }
@@ -81,6 +93,16 @@ $loggedInAsLibrarian = true;
                 <button type="submit" class="btn btn-primary borrow-btn large">Borrow this book</button>
             </form>
             @endif
+            @if ($loggedInAsLibrarian)
+            <a href="{{route('books.edit', $book['id'])}}">
+                <button type="submit" class="btn btn-secondary borrow-btn large">Edit</button>
+            </a>
+            <form action="{{route('books.destroy', $book['id'])}}" method="POST">
+                @method('delete')
+                @csrf
+                <button type="submit" class="btn btn-danger book-save-action-btn large">Delete</button>
+            </form>
+            @endif
         </div>
     </div>
 
@@ -92,61 +114,59 @@ $loggedInAsLibrarian = true;
         @endif
         <div class="details">
             <div class="book-info">
-                <div>
+                <div class="my-1">
                     <h3>Author</h3>
                     <div>{{ $book['authors'] }}</div>
                 </div>
 
-                <div>
-                    <h3>Genres</h3>
-                    <div class="tags wrap">
-                        @foreach ($book->genres as $genre)
-                        <div class="tag {{$genre['style']}}">
-                            <?php echo $genre['name']; ?>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div>
+                <div class="my-1">
                     <h3>Date of publish</h3>
                     <div>{{ $book['releasedAt'] }}</div>
                 </div>
 
-                <div>
+                <div class="my-1">
                     <h3>Number of pages</h3>
                     <div>{{ $book['pages'] }}</div>
                 </div>
 
-                <div>
+                <div class="my-1">
                     <h3>Language</h3>
                     <div>{{ $book['languageCode'] }}</div>
                 </div>
 
-                <div>
+                <div class="my-1">
                     <h3>ISBN number</h3>
                     <div>{{ $book['isbn'] }}</div>
                 </div>
-
             </div>
 
+            <div class="my-3">
+                <h3>Genres</h3>
+                @component('genres.components.selector', ['genres' => $book->genres]) @endcomponent
+            </div>
 
             <div class="stock-info">
-                <h3>Number of this book in the library</h3>
-                <div>TODO collect rental table info</div>
+                <div class="my-1">
+                    <h3>Number of this book in the library</h3>
+                    <div>{{ $book['inStock'] }}</div>
+                </div>
 
-                <h3>Number of available books</h3>
-                <div>{{ $book['inStock'] }}</div>
-
-                @if ($loggedInAsReader)
-                <h3>Is borrowed</h3>
-                <div>NO</div>
-                @endif
+                <div class="my-1">
+                    <h3>Number of available books</h3>
+                    <div>TODO collect rental table info</div>
+                </div>
             </div>
+
+            @if ($loggedInAsReader)
+            <div class="my-3">
+                <h3>Currently borrowed</h3>
+                <div>PLACEHOLDER</div>
+            </div>
+            @endif
         </div>
     </div>
 
     <h3>Description</h3>
-    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex veritatis cum consequuntur ipsum sequi quis dolorum beatae, hic inventore asperiores molestiae ipsa velit consequatur cumque, consectetur commodi fuga porro exercitationem.</div>
+    <div>{{ $book['description'] }}</div>
 </div>
 @endsection

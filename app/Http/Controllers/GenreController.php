@@ -92,8 +92,8 @@ class GenreController extends Controller
      */
     public function update(Genre $genre, UpdateGenreRequest $request)
     {
-        $val = $request->validated();
-        $genre->update($val);
+        $validatedGenre = $request->validated();
+        $genre->update($validatedGenre);
         return redirect()->route('manage-genres');
     }
 

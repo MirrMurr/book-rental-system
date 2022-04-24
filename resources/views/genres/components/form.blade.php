@@ -6,7 +6,9 @@ $styles = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'ligh
     <h4 for="name">Name</h4>
     <input name="name" class="form-item @error('name') is-invalid @enderror" type="text" value="{{ old('name', $selectedGenre != null ? $selectedGenre['name'] : '')}}" {{!($isEditMode ?? true) ? 'disabled' : ''}} />
     @error('name')
+    <div class="input-validation-error">
         {{ $message }}
+    </div>
     @enderror
 </div>
 <div class="custom-form-item">

@@ -11,6 +11,10 @@
 
 
 <style>
+
+.genre-form {
+    max-width: 30%;
+}
 .genre-create-action-btn {
     width: max-content;
     height: max-content;
@@ -22,14 +26,16 @@
 </style>
 
 @section('content')
-<div class="new-genre-page card">
+<div class="new-genre-page">
     <div class="page-header">
         <h1>New genre</h1>
     </div>
     <form action="{{route('genres.store')}}" method="POST">
         @csrf
 
-        @component('genres.components.form', ['isEditMode' => true]) @endcomponent
+        <div class="card genre-form">
+            @component('genres.components.form', ['isEditMode' => true]) @endcomponent
+        </div>
 
         <div class="row action-buttons">
             <button type="submit" class="btn btn-primary large genre-create-action-btn">Save</button>

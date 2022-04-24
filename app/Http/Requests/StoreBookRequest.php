@@ -28,13 +28,12 @@ class StoreBookRequest extends FormRequest
             "authors" => 'required|max:255',
             "releasedAt" => 'required|date|before:now',
             "pages" => 'required|numeric|min:1',
-            // "isbn" => 'required|regex:/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/i',
-            "isbn" => 'required',
+            "isbn" => 'required|regex:/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/i',
             "description" => 'nullable',
             "genres" => 'array',
             "genres.*" => 'integer',
             "inStock" => 'required|integer|min:0',
-            "coverImage" => 'url',
+            "coverImage" => 'nullable|url',
         ];
     }
 }

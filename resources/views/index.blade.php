@@ -45,10 +45,10 @@
     <div class="system-info my-3">
         <h2>Library info</h2>
         <div class="card system-info-card">
-            {{-- <div>
+            <div>
                 <h4>Number of users in the system</h4>
                 <div>placeholder</div>
-            </div> --}}
+            </div>
             <div>
                 <h4>Number of genres</h4>
                 <div>{{ count($genres) }}</div>
@@ -57,10 +57,10 @@
                 <h4>Number of books</h4>
                 <div>{{ count($books) }}</div>
             </div>
-            {{-- <div>
+            <div>
                 <h4>Number of active book rentals</h4>
                 <div>placeholder</div>
-            </div> --}}
+            </div>
         </div>
     </div>
 

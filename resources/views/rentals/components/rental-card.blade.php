@@ -11,14 +11,15 @@
 <div>
 @foreach ($rentals as $rental)
     @if ($rental['status'] == $status)
-        <a href="rental/{{$rental['id']}}">
+        <a href="{{route('rentals.show', $rental->id)}}">
             <div class="card rental-request">
-                <ul>
+                {{-- <ul>
                     <li>{{$rental['title']}}</li>
                     <li>{{$rental['author']}}</li>
                     <li>{{$rental['dateOfRental']}}</li>
                     <li>{{$rental['deadline']}}</li>
-                </ul>
+                </ul> --}}
+                <div>{{"$rental->book['title']"}} | {{"$rental->book['author']"}} | {{$rental['requestProcessedAt']}} | {{$rental['deadline']}}</div>
             </div>
         </a>
     @endif

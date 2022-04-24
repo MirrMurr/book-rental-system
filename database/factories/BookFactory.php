@@ -21,7 +21,7 @@ class BookFactory extends Factory
             'authors' => $this->faker->words(4, true),
             'releasedAt' => $this->faker->date,
             'pages' => $this->faker->numberBetween(0, 700),
-            'isbn' => $this->faker->uuid(),
+            'isbn' => $this->faker->numerify('#############'),
             'description' => $this->faker->optional()->paragraphs(3, true),
             'inStock' => $this->faker->numberBetween(0, 15),
             'coverImage' => $this->faker->imageUrl(480, 640, 'book cover')

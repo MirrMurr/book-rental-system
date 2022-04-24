@@ -17,7 +17,14 @@ class RentalFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'reader_id' => $this->faker->uuid(),
+        	'book_id' => $this->faker->uuid(),
+        	'status' => $this->faker->randomElement(['PENDING', 'ACCEPTED', 'REJECTED', 'RETURNED']),
+        	'requestProcessedAt' => $this->faker->date,
+        	'requestManagedBy' => $this->faker->uuid(),
+        	'deadline' => $this->faker->date,
+        	'returnedAt' => $this->faker->date,
+        	'returnManagedBy' => $this->faker->uuid()
         ];
     }
 }

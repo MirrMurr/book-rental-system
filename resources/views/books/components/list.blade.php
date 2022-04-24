@@ -1,7 +1,6 @@
 <style>
 .book-entry {
     display: flex;
-    /* min-height: ; */
 }
 .book-entry:hover {
     box-shadow: 0px 5px 20px #aaa;
@@ -27,7 +26,6 @@
 
 .book-cover-container {
     height: 15rem;
-    /* max-width: 30%; */
     margin-right: 2rem;
 }
 .book-cover {
@@ -85,13 +83,7 @@ $view = $_GET["view"] ?? 'list';
             <div class="details">
                 <h4>{{$book['title']}}</h4>
                 <p>{{$book['authors']}}</p>
-                <div class="tags wrap">
-                    @foreach ($book->genres as $genre)
-                    <div class="tag {{$genre['style']}}">
-                        <?php echo $genre['name']; ?>
-                    </div>
-                    @endforeach
-                </div>
+                @component('genres.components.selector', ['genres' => $book->genres, 'links' => false]) @endcomponent
             </div>
         </div>
     </a>

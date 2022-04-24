@@ -20,9 +20,14 @@
         --primary-color-dim: rgba(172, 255, 47, 0.396);
         --light-green: greenyellow;
         --dark-green: rgb(2, 77, 2);
-        --color-danger: rgb(156, 63, 63);
+        --color-danger: red;
         --color-danger-light: rgb(188, 75, 75);
         --color-danger-dark: rgb(110, 45, 45);
+    }
+
+    html {
+        width: 100vw;
+        height: 100vh;
     }
 
     *,
@@ -78,8 +83,7 @@
     }
 
     .nav *> li.active {
-        color: var(--dark-green);
-        /* color: white; */
+        color: var(--light-green);
     }
 
     .nav *> li:hover {
@@ -180,6 +184,11 @@
         background-color: var(--primary-color);
         color: white;
     }
+    .btn-primary:hover {
+        /* outline: 2px solid var(--primary-color);
+        background-color: var(--primary-color); */
+        color: var(--primary-color);
+    }
 
     .btn-secondary {
         outline: 2px solid var(--primary-color);
@@ -222,7 +231,6 @@
         flex-direction: column;
         justify-content: space-between;
         min-width: 10rem;
-        /* max-width: 50%; */
         margin-bottom: 1rem;
     }
 
@@ -231,11 +239,12 @@
     }
 
     .input-validation-error {
+        font-size: 20px;
         color: var(--color-danger);
     }
 
     .is-invalid {
-        outline: 2px solid var(--color-danger);
+        border: 1px solid var(--color-danger);
     }
 
     .tags {
@@ -360,10 +369,8 @@
     }
 
     .select-highlight {
-        /* box-shadow: 0px 5px 15px var(--light-green); */
         box-shadow: 0px 5px 15px gray;
-        outline: 3px solid var(--light-green);
-        /* outline: 2px solid gray; */
+        outline: 2px solid var(--light-green);
     }
 
     .pending { color: blue; }
@@ -387,6 +394,7 @@
     .btn-danger:hover {
         background-color: var(--color-danger-light);
         color: white;
+        outline: none;
     }
     .btn-danger:active {
         background-color: var(--color-danger-dark);
@@ -417,49 +425,10 @@
     </style>
 </head>
 <body>
+
 <div class="app">
     <div class="layout">
-        <div class="nav">
-            <ul>
-                <a href="{{route('home')}}">
-                    <li class="{{ (request()->is('home')) ? 'active' : '' }}">Home</li>
-                </a>
-                <a href="{{route('books.index')}}">
-                    <li class="{{ (request()->is('books') || request()->is('search-books')) ? 'active' : '' }}">Books</li>
-                </a>
-                <a href="{{route('genres.index')}}">
-                    <li class="{{ (request()->is('genres')) ? 'active' : '' }}">Genres</li>
-                </a>
-                <a href="{{route('rentals.index')}}">
-                    <li class="{{ (request()->is('rentals')) ? 'active' : '' }}">My rentals</li>
-                </a>
-
-                <div class="divider"></div>
-
-                <a href="{{ route('manage-books') }}">
-                    <li class="{{ (request()->is('manage-books')) ? 'active' : '' }}">Book settings</li>
-                </a>
-                <a href="{{ route('manage-genres') }}">
-                    <li class="{{ (request()->is('manage-genres')) ? 'active' : '' }}">Genre settings</li>
-                </a>
-
-                {{-- <div class="divider"></div>
-
-                <a href="/register">
-                    <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
-                </a>
-                <a href="/login">
-                    <li class="{{ (request()->is('login*')) ? 'active' : '' }}">Log in</li>
-                </a>
-                <a href="/profile">
-                    <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
-                </a> --}}
-
-            </ul>
-            <div class="nav-footer">
-                BRS
-            </div>
-        </div>
+        @component('nav') @endcomponent
         <div class="content">
             @yield('content')
         </div>

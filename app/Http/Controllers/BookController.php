@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     public function home() {
-        // TODO login: authenticate || home page
         $books = Book::all();
         $genres = Genre::all();
         return view('index', compact('books', 'genres'));
@@ -50,10 +49,10 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        $val = $request->validated();
-        $genres = $val['genres'] ?? [];
-        unset($val['genres']);
-        $book = Book::create($val);
+        $validatedBook = $request->validated();
+        $genres = $validatedBook['genres'] ?? [];
+        unset($validatedBook['genres']);
+        $book = Book::create($validatedBook);
         $book->genres()->sync($genres);
         return redirect()->route('manage-books');
     }
@@ -91,12 +90,12 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        $valid = $request->validated();
-        $genres = $val['genres'] ?? [];
-        unset($valid['genres']);
-        $book->update($valid);
+        $validatedBook = $request->validated();
+        $genres = $validatedBook['genres'] ?? [];
+        unset($validatedBook['genres']);
+        $book->update($validatedBook);
         $book->genres()->sync($genres);
-        return redirect()->route('manage-books');
+        return redirect()->route('books.show', $book->id);
     }
 
     /**
@@ -108,8 +107,10 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return redirect()->route('manage-books');
+        return redirect()->route('home');
     }
+
+    // === CUSTOM FUNCIONALITY ===
 
     public function searchBooks(Request $request) {
         $title = $request->title;
