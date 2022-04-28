@@ -9,6 +9,20 @@ I have not copied or used third party solutions.
 I have not passed my solution to my classmates, neither  made it public.
 Students’ regulation of Eötvös Loránd University (ELTE Regulations Vol. II. 74/C. § ) states that as long as a student presents another student’s work - or at least the significant part of it - as his/her own performance, it will count as a disciplinary fault. The most serious consequence of a disciplinary fault can be dismissal of the student from the University.
 
+![Login](./assets/login.png)
+
+![Librarian home page](./assets/homepage-librarian.png)
+
+![Filtered by genres](./assets/genres-filtered.png)
+
+![Book details](./assets/book-details.png)
+
+![New book](./assets/book-create.png)
+
+![Genre settings](./assets/genre-settings.png)
+
+![Rentals](./assets/rental-lists.png)
+
 ---
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
