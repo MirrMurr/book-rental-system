@@ -18,7 +18,7 @@ class GenreController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->authorizeResource(Genre::class, 'genre');
     }
 
     /**
@@ -121,6 +121,6 @@ class GenreController extends Controller
 
     public function manageGenres() {
         $genres = Genre::all();
-        return view('admin.manage-genres', ["genres" => $genres]);
+        return view('genres.manage', ["genres" => $genres]);
     }
 }

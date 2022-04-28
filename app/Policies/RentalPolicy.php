@@ -10,6 +10,10 @@ class RentalPolicy
 {
     use HandlesAuthorization;
 
+    private function isLibrarian(User $user) {
+        return $user->role == 'librarian';
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +22,7 @@ class RentalPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +34,7 @@ class RentalPolicy
      */
     public function view(User $user, Rental $rental)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +45,7 @@ class RentalPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +57,7 @@ class RentalPolicy
      */
     public function update(User $user, Rental $rental)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -65,7 +69,7 @@ class RentalPolicy
      */
     public function delete(User $user, Rental $rental)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -77,7 +81,7 @@ class RentalPolicy
      */
     public function restore(User $user, Rental $rental)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -89,6 +93,6 @@ class RentalPolicy
      */
     public function forceDelete(User $user, Rental $rental)
     {
-        //
+        return $this->isLibrarian($user);
     }
 }

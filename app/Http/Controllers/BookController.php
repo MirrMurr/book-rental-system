@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\Genre;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,7 @@ class BookController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->authorizeResource(Book::class, 'book');
     }
 
     /**
@@ -70,7 +72,24 @@ class BookController extends Controller
     public function show(Book $book)
     {
         $genres = Genre::all();
-        return view('books.details', compact('book', "genres"));
+        $ongoingRentalsForUser = DB::table('rentals')
+                ->where('readerId', Auth::id())
+                ->where('book_id', $book->id)
+                ->whereNot(function ($query) {
+                    $query->where('status', 'REJECTED')
+                          ->orWhere('status', 'RETURNED');
+                })->get();
+        $isAlreadyBorrowed = count($ongoingRentalsForUser) != 0;
+
+        $ongoingRentals = DB::table('rentals')
+                ->where('book_id', $book->id)
+                ->whereNot(function ($query) {
+                    $query->where('status', 'REJECTED')
+                          ->orWhere('status', 'RETURNED');
+                })->get();
+
+        $availableAmount = $book['inStock'] - count($ongoingRentals);
+        return view('books.details', compact('book', 'genres', 'isAlreadyBorrowed', 'availableAmount'));
     }
 
     /**
@@ -135,6 +154,6 @@ class BookController extends Controller
     public function manageBooks() {
         $books = Book::all();
         $genres = Genre::all();
-        return view('admin.manage-books', compact('books', 'genres'));
+        return view('books.manage', compact('books', 'genres'));
     }
 }

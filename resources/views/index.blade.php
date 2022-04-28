@@ -71,7 +71,7 @@
             </div>
             <div>
                 <h4>Number of active book rentals</h4>
-                <div>placeholder</div>
+                <div>{{ count($rentals) }}</div>
             </div>
         </div>
     </div>

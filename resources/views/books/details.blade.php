@@ -76,9 +76,7 @@
 }
 </style>
 
-{{-- TODO --}}
 <?php
-$loggedInAsReader = true;
 $loggedInAsLibrarian = true;
 ?>
 
@@ -86,14 +84,15 @@ $loggedInAsLibrarian = true;
     <div class="title">
         <h1>{{ $book['title'] }}</h1>
         <div class="action-buttons">
-            @if ($loggedInAsReader)
-            <form action="/new-rental" method="POST">
+            @if (!$isAlreadyBorrowed && $availableAmount > 0)
+            <form action="{{route('rentals.store')}}" method="POST">
                 @csrf
                 <input type="hidden" name="bookId" value="{{$book['id']}}" />
-                <button type="submit" class="btn btn-primary borrow-btn large">Borrow this book</button>
+                <button type="submit" class="btn btn-primary borrow-btn large @if ($isAlreadyBorrowed) disabled @endif">Borrow this book</button>
             </form>
             @endif
-            @if ($loggedInAsLibrarian)
+            @can('manage')
+
             <a href="{{route('books.edit', $book['id'])}}">
                 <button type="submit" class="btn btn-secondary borrow-btn large">Edit</button>
             </a>
@@ -102,7 +101,7 @@ $loggedInAsLibrarian = true;
                 @csrf
                 <button type="submit" class="btn btn-danger book-save-action-btn large">Delete</button>
             </form>
-            @endif
+            @endcan
         </div>
     </div>
 
@@ -153,16 +152,14 @@ $loggedInAsLibrarian = true;
 
                 <div class="my-1">
                     <h3>Number of available books</h3>
-                    <div>TODO collect rental table info</div>
+                    <div>{{$availableAmount}}</div>
                 </div>
             </div>
 
-            @if ($loggedInAsReader)
             <div class="my-3">
                 <h3>Currently borrowed</h3>
-                <div>PLACEHOLDER</div>
+                <div>{{$isAlreadyBorrowed ? 'Yes' : 'No'}}</div>
             </div>
-            @endif
         </div>
     </div>
 

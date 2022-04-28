@@ -6,6 +6,7 @@ use App\Models\Rental;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RentalSeeder extends Seeder
 {
@@ -17,18 +18,51 @@ class RentalSeeder extends Seeder
     public function run()
     {
         DB::table('rentals')->truncate();
-        Rental::factory()->count(12)->create();
+        // Rental::factory()->count(12)->create();
 
-        // $rentalPending = Rental::factory()->create();
-        // $rentalPending->status = 'PENDING';
+        Rental::create([
+            'status' => 'PENDING',
+        	'deadline' => Carbon::now()->addDays(14),
+    		'readerId' => '1',
+    		'book_id' => '1',
+        ]);
 
-        // $rentalAccepted = Rental::factory()->create();
-        // $rentalAccepted->status = 'ACCECPTED';
+        Rental::create([
+            'status' => 'ACCEPTED',
+        	'deadline' => Carbon::now()->addDays(14),
+    		'readerId' => '1',
+    		'book_id' => '2',
+        	'requestProcessedAt' => Carbon::now(),
+    		'requestManagedBy' => '4',
+        ]);
 
-        // $rentalRejected = Rental::factory()->create();
-        // $rentalRejected->status = 'REJECTED';
+        Rental::create([
+            'status' => 'ACCEPTED',
+        	'deadline' => Carbon::now()->addDays(-1),
+    		'readerId' => '1',
+    		'book_id' => '3',
+        	'requestProcessedAt' => Carbon::now(),
+    		'requestManagedBy' => '2',
+        ]);
 
-        // $rentalReturned = Rental::factory()->create();
-        // $rentalReturned->status = 'RETURNED';
+        Rental::create([
+            'status' => 'REJECTED',
+        	'deadline' => Carbon::now()->addDays(-1),
+    		'readerId' => '1',
+    		'book_id' => '4',
+        	'requestProcessedAt' => Carbon::now(),
+    		'requestManagedBy' => '2',
+        ]);
+
+        Rental::create([
+            'status' => 'RETURNED',
+        	'deadline' => Carbon::now(),
+    		'readerId' => '1',
+    		'book_id' => '5',
+        	'requestProcessedAt' => Carbon::now(),
+    		'requestManagedBy' => '2',
+        	'returnedAt' => Carbon::now(),
+    		'returnManagedBy' => '4',
+        ]);
     }
 }

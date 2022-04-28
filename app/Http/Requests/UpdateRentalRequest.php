@@ -13,7 +13,7 @@ class UpdateRentalRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateRentalRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'status' => 'required',
+            'deadline' => 'required|date|after_or_equal:today'
         ];
     }
 }

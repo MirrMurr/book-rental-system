@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Http\Requests\StoreRentalRequest;
 use App\Http\Requests\UpdateRentalRequest;
 use App\Models\Rental;
 use App\Models\Book;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RentalController extends Controller
 {
@@ -16,7 +19,7 @@ class RentalController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->authorizeResource(Rental::class, 'rental');
     }
 
     /**
@@ -26,8 +29,13 @@ class RentalController extends Controller
      */
     public function index()
     {
-        $rentals = Rental::all();
-        return view('rentals.index', compact('rentals'));
+        $pending = Rental::all()->where('status', 'PENDING')->where('readerId', Auth::id());
+        $accepted = Rental::all()->where('status', 'ACCEPTED')->where('deadline', '>=', Carbon::now())->where('readerId', Auth::id());
+        $acceptedLate = Rental::all()->where('status', 'ACCEPTED')->where('deadline', '<', Carbon::now())->where('readerId', Auth::id());
+        $rejected = Rental::all()->where('status', 'REJECTED')->where('readerId', Auth::id());
+        $returned = Rental::all()->where('status', 'RETURNED')->where('readerId', Auth::id());
+
+        return view('rentals.index', compact('pending', 'accepted', 'acceptedLate', 'rejected', 'returned'));
     }
 
     /**
@@ -48,6 +56,14 @@ class RentalController extends Controller
      */
     public function store(StoreRentalRequest $request)
     {
+        $validatedRental = $request->validated();
+        $deadline = Carbon::now()->addDays(14)->format('Y-m-d');
+        $rental = Rental::create([
+            'status' => 'PENDING',
+            'deadline' => $deadline,
+            'readerId' => Auth::id(),
+            'book_id' => $request['bookId'],
+        ]);
         return back();
     }
 
@@ -59,8 +75,7 @@ class RentalController extends Controller
      */
     public function show(Rental $rental)
     {
-        $book = Book::findOrFail(8);
-        return view('rentals.details', compact('rental', 'book'));
+        return view('rentals.details', compact('rental'));
     }
 
     /**
@@ -83,7 +98,19 @@ class RentalController extends Controller
      */
     public function update(UpdateRentalRequest $request, Rental $rental)
     {
-        //
+        $validatedRental = $request->validated();
+        $newStatus = $validatedRental['status'];
+        $newDeadline = $validatedRental['deadline'];
+        if (in_array($newStatus, ['ACCEPTED', 'REJECTED'])) {
+            $validatedRental['requestProcessedAt'] = Carbon::now();
+            $validatedRental['requestManagedBy'] = Auth::id();
+        }
+        if (in_array($newStatus, ['RETURNED'])) {
+            $validatedRental['returnedAt'] = Carbon::now();
+            $validatedRental['returnManagedBy'] = Auth::id();
+        }
+        $rental->update($validatedRental);
+        return redirect()->route('rentals.show', $rental->id);
     }
 
     /**
@@ -94,6 +121,17 @@ class RentalController extends Controller
      */
     public function destroy(Rental $rental)
     {
-        //
+        $genre->delete();
+        return redirect()->route('rentals.index');
+    }
+
+    public function manageRentals() {
+        $pending = Rental::all()->where('status', 'PENDING');
+        $accepted = Rental::all()->where('status', 'ACCEPTED')->where('deadline', '>=', Carbon::now());
+        $acceptedLate = Rental::all()->where('status', 'ACCEPTED')->where('deadline', '<', Carbon::now());
+        $rejected = Rental::all()->where('status', 'REJECTED');
+        $returned = Rental::all()->where('status', 'RETURNED');
+
+        return view('rentals.manage', compact('pending', 'accepted', 'acceptedLate', 'rejected', 'returned'));
     }
 }

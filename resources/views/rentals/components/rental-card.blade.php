@@ -13,13 +13,8 @@
     @if ($rental['status'] == $status)
         <a href="{{route('rentals.show', $rental->id)}}">
             <div class="card rental-request">
-                {{-- <ul>
-                    <li>{{$rental['title']}}</li>
-                    <li>{{$rental['author']}}</li>
-                    <li>{{$rental['dateOfRental']}}</li>
-                    <li>{{$rental['deadline']}}</li>
-                </ul> --}}
-                <div>{{"$rental->book['title']"}} | {{"$rental->book['author']"}} | {{$rental['requestProcessedAt']}} | {{$rental['deadline']}}</div>
+                <div> <strong>{{$rental->book->title}}</strong> | {{$rental->book->authors}}</div>
+                <div>Submitted: {{ Carbon\Carbon::parse($rental['created_at'])->format('Y-m-d') }} | Deadline: {{ Carbon\Carbon::parse($rental['deadline'])->format('Y-m-d') }}</div>
             </div>
         </a>
     @endif

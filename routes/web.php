@@ -18,6 +18,8 @@ use App\Http\Controllers\UserController;
 */
 
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 /*
 ---------------------------------------
 Main book functionality, search, genres
@@ -34,18 +36,6 @@ Route::resource('rentals', RentalController::class);
 Route::resource('users', UserController::class);
 
 Route::post('/search-books', [BookController::class, 'searchBooks'])->name('books.search');
-
-/*
----------------------------------------
-Rentals
----------------------------------------
-*/
-
-// Route::get('/my-rentals', [RentalController::class, 'myRentals']);
-
-// Route::get('/rental/{id}', [RentalController::class, 'rentalDetails']);
-
-// Route::post('/new-rental', [RentalController::class, 'newRental']);
 
 
 /*
@@ -65,10 +55,6 @@ Admin settings
 
 Route::get('/manage-books', [BookController::class, 'manageBooks'])->name('manage-books');
 Route::get('/manage-genres', [GenreController::class, 'manageGenres'])->name('manage-genres');
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/manage-rentals', [RentalController::class, 'manageRentals'])->name('manage-rentals');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

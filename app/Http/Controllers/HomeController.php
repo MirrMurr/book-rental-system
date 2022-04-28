@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\Rental;
 
 class HomeController extends Controller
 {
@@ -29,6 +30,7 @@ class HomeController extends Controller
         $users = User::all();
         $books = Book::all();
         $genres = Genre::all();
-        return view('index', compact('users', 'books', 'genres'));
+        $rentals = Rental::all()->where('status', 'ACCEPTED');
+        return view('index', compact('users', 'books', 'genres', 'rentals'));
     }
 }

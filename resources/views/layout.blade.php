@@ -59,9 +59,8 @@
     .nav {
         background-color: var(--primary-color);
         color: white;
-        /* color: var(--dark-green); */
         height: 100vh;
-        min-width: 200px;
+        width: 300px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -118,6 +117,15 @@
         background-color: inrehit;
     }
 
+    .card-title {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 1rem;
+        align-items: center;
+    }
+
     .quote {
         padding: 0 1rem;
         border-left: 5px solid gray;
@@ -170,6 +178,13 @@
         font-family: 'Yanone Kaffeesatz', 'Josefin Sans', sans-serif !important;
     }
 
+    .btn.disabled {
+        color: gray !important;
+        background-color: lightgray !important;
+        outline: none !important;
+        cursor: not-allowed !important;
+    }
+
     .btn:hover {
         background-color: var(--light-green);
         outline: 2px solid var(--light-green);
@@ -187,6 +202,12 @@
     .btn-primary:hover {
         /* outline: 2px solid var(--primary-color);
         background-color: var(--primary-color); */
+        color: var(--primary-color);
+    }
+    .link-primary {
+        color: black;
+    }
+    .link-primary:hover {
         color: var(--primary-color);
     }
 
@@ -369,8 +390,8 @@
     }
 
     .select-highlight {
-        box-shadow: 0px 5px 15px gray;
-        outline: 2px solid var(--light-green);
+        box-shadow: 0px 5px 15px var(--light-green);
+        outline: 4px solid var(--light-green);
     }
 
     .pending { color: blue; }
@@ -384,6 +405,13 @@
         width: 100%;
         margin: 1rem 0;
         background-color: var(--primary-color-dim);
+    }
+
+    .divider-gray {
+        height: 1px;
+        width: 100%;
+        margin: 1rem 0;
+        background-color: lightgrey;
     }
 
     .btn-danger {
@@ -420,6 +448,12 @@
 
     .wrap {
         flex-wrap: wrap;
+    }
+
+    @media only screen and (max-width: 550px) {
+        .nav {
+            width: 50px;
+        }
     }
 
     </style>

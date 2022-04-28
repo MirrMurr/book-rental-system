@@ -22,7 +22,6 @@
         </a>
     </div>
 
-    {{-- @component('books.book-list', compact('books', 'genres')) @endcomponent --}}
     @component('books.components.list', ['books' => $books, 'genres' => $genres, "edit" => true]) @endcomponent
 </div>
 @endsection

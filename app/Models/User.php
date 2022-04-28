@@ -44,9 +44,17 @@ class User extends Authenticatable
         'emailVerifiedAt' => 'datetime',
     ];
 
-    // public function projects() {
-    //     return $this->hasMany(Project::class);
-    // }
+    public function ownRentals() {
+        return $this->hasMany(Rental::class, 'readerId');
+    }
+
+    public function managedRentalRequests() {
+        return $this->hasMany(Rental::class, 'requestManagedBy');
+    }
+
+    public function managedRentalRenturns() {
+        return $this->hasMany(Rental::class, 'returnManagedBy');
+    }
 
     public function isLibrarian()
     {

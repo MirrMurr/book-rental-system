@@ -10,6 +10,10 @@ class BookPolicy
 {
     use HandlesAuthorization;
 
+    private function isLibrarian(User $user) {
+        return $user->role == 'librarian';
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +22,7 @@ class BookPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +34,7 @@ class BookPolicy
      */
     public function view(User $user, Book $book)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +45,7 @@ class BookPolicy
      */
     public function create(User $user)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -53,7 +57,7 @@ class BookPolicy
      */
     public function update(User $user, Book $book)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -65,7 +69,7 @@ class BookPolicy
      */
     public function delete(User $user, Book $book)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -77,7 +81,7 @@ class BookPolicy
      */
     public function restore(User $user, Book $book)
     {
-        //
+        return $this->isLibrarian($user);
     }
 
     /**
@@ -89,6 +93,6 @@ class BookPolicy
      */
     public function forceDelete(User $user, Book $book)
     {
-        //
+        return $this->isLibrarian($user);
     }
 }

@@ -1,13 +1,13 @@
 @extends('layout')
-@section('title', 'My rentals')
+@section('title', 'Manage books')
 
 <style>
 
 </style>
 
 @section('content')
-<div class="my-rentals-page">
-    <h1>My rentals</h1>
+<div class="manage-rentals-page">
+    <h1>Manage rentals</h1>
     @component('rentals.components.lists', compact('pending', 'accepted', 'acceptedLate', 'rejected', 'returned')) @endcomponent
 </div>
 @endsection

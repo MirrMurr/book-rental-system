@@ -12,19 +12,24 @@
         </a>
 
         <a href="{{route('rentals.index')}}">
-            <li class="{{ (request()->is('rentals')) ? 'active' : '' }}">Rentals</li>
+            <li class="{{ (request()->is('rentals')) ? 'active' : '' }}"> My rentals</li>
         </a>
 
         <div class="divider"></div>
 
+        @can('manage')
         <a href="{{ route('books.create') }}">
             <li class="{{ (request()->is('books/create')) ? 'active' : '' }}">Add book</li>
         </a>
         <a href="{{ route('manage-genres') }}">
             <li class="{{ (request()->is('manage-genres')) ? 'active' : '' }}">Manage genres</li>
         </a>
+        <a href="{{ route('manage-rentals') }}">
+            <li class="{{ (request()->is('manage-rentals')) ? 'active' : '' }}">Manage rentals</li>
+        </a>
 
         <div class="divider"></div>
+        @endcan
 
         <a href="/profile">
             <li class="{{ (request()->is('profile*')) ? 'active' : '' }}">Profile</li>
@@ -40,16 +45,13 @@
             @csrf
         </form>
 
-        @else
+        @endauth
 
-        <a href="/register">
-            <li class="{{ (request()->is('register*')) ? 'active' : '' }}">Register</li>
-        </a>
-
-        <a href="/login">
+        @guest
+        <a href="{{route('login')}}">
             <li class="{{ (request()->is('login*')) ? 'active' : '' }}">Log in</li>
         </a>
-        @endauth
+        @endguest
     </ul>
 
     <div class="nav-footer">
