@@ -1,7 +1,6 @@
-# ELTE CS MSc - Web engineering assignment 01 - Server-side PHP/Laravel application
-## Adam P. Kara
-## IPN14Q
-
+# ELTE CS MSc FinTech, Web engineering 2021/22/2, PHP/Laravel server side assignment
+<!-- # ELTE CS MSc - Web engineering assignment 01 - Server-side PHP/Laravel application -->
+## Adam P. Kara - IPN14Q
 
 **Statement**:
 This solution was submitted and prepared by stundent named above for the home assignment of the Web engineering course.
